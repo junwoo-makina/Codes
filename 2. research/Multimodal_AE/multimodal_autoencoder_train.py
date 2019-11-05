@@ -22,14 +22,14 @@ parser = argparse.ArgumentParser()
 
 # Options for the path
 parser.add_argument('--dataset', default='KITTI', help='what is dataset?')
-parser.add_argument('--image_dataroot', default='/media/leejeyeol/74B8D3C8B8D38750/Data/KITTI_train/img', help='path to dataset')
-parser.add_argument('--depth_dataroot', default='/media/leejeyeol/74B8D3C8B8D38750/Data/KITTI_train/depth', help='path to dataset')
-parser.add_argument('--semantic_dataroot', default='/media/leejeyeol/74B8D3C8B8D38750/Data/KITTI_train/semantic', help='path to dataset')
+parser.add_argument('--image_dataroot', default='/media//74B8D3C8B8D38750/Data/KITTI_train/img', help='path to dataset')
+parser.add_argument('--depth_dataroot', default='/media//74B8D3C8B8D38750/Data/KITTI_train/depth', help='path to dataset')
+parser.add_argument('--semantic_dataroot', default='/media//74B8D3C8B8D38750/Data/KITTI_train/semantic', help='path to dataset')
 parser.add_argument('--fold', type=int, default=None)
-parser.add_argument('--fold_dataroot', default='/media/leejeyeol/74B8D3C8B8D38750/Data/KITTI_train/fold_10', help='folds maked by Preprocessing/fold_divider')
+parser.add_argument('--fold_dataroot', default='/media//74B8D3C8B8D38750/Data/KITTI_train/fold_10', help='folds maked by Preprocessing/fold_divider')
 
 parser.add_argument('--net', default='', help="path of Generator networks.(to continue training)")
-parser.add_argument('--outf', default='/media/leejeyeol/74B8D3C8B8D38750/experiment/MMAE', help="folder to output images and model checkpoints")
+parser.add_argument('--outf', default='/media//74B8D3C8B8D38750/experiment/MMAE', help="folder to output images and model checkpoints")
 
 parser.add_argument('--cuda', action='store_true', help='enables cuda')
 parser.add_argument('--display', default=True, help='display options. default:False. NOT IMPLEMENTED')
@@ -46,14 +46,14 @@ parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for Adam.')
 
 parser.add_argument('--seed', type=int, help='manual seed')
 '''
-parser.add_argument('--net_ER', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_R_epoch_0.pth', help='Encoder Red')
-parser.add_argument('--net_EG', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_G_epoch_0.pth', help='Encoder Green')
-parser.add_argument('--net_EB', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_B_epoch_0.pth', help='Encoder Blue')
-parser.add_argument('--net_ED', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_D_epoch_0.pth', help='Encoder Depth')
-parser.add_argument('--net_DR', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_R_epoch_0.pth', help='Decoder Red')
-parser.add_argument('--net_DG', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_G_epoch_0.pth', help='Decoder Green')
-parser.add_argument('--net_DB', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_B_epoch_0.pth', help='Decoder Blue')
-parser.add_argument('--net_DD', default='/home/leejeyeol/Git/LJY_Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_D_epoch_0.pth', help='Decoder Depth')
+parser.add_argument('--net_ER', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_R_epoch_0.pth', help='Encoder Red')
+parser.add_argument('--net_EG', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_G_epoch_0.pth', help='Encoder Green')
+parser.add_argument('--net_EB', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_B_epoch_0.pth', help='Encoder Blue')
+parser.add_argument('--net_ED', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/encoder_D_epoch_0.pth', help='Encoder Depth')
+parser.add_argument('--net_DR', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_R_epoch_0.pth', help='Decoder Red')
+parser.add_argument('--net_DG', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_G_epoch_0.pth', help='Decoder Green')
+parser.add_argument('--net_DB', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_B_epoch_0.pth', help='Decoder Blue')
+parser.add_argument('--net_DD', default='/home//Git/Machine_Learning/Autoencoder/Multimodal_Autoencoder/pretrained_model/decoder_D_epoch_0.pth', help='Decoder Depth')
 
 
 parser.add_argument('--net_ER', default='', help='Encoder Red')
@@ -150,43 +150,43 @@ if options.net_E_RGB_R !='':
 print(encoder_RGB_R)
 
 encoder_RGB_L = model.encoder(3)
-encoder_RGB_L.apply(LJY_utils.weights_init)
+encoder_RGB_L.apply(utils.weights_init)
 if options.net_E_RGB_L != '':
     encoder_RGB_L.load_state_dict(torch.load(options.net_E_RGB_L))
 print(encoder_RGB_L)
 
 encoder_D_D = model.encoder(1)
-encoder_D_D.apply(LJY_utils.weights_init)
+encoder_D_D.apply(utils.weights_init)
 if options.net_E_D_D != '':
     encoder_D_D.load_state_dict(torch.load(options.net_E_D_D))
 print(encoder_D_D)
 
 encoder_D_L = model.encoder(1)
-encoder_D_L.apply(LJY_utils.weights_init)
+encoder_D_L.apply(utils.weights_init)
 if options.net_E_D_L != '':
     encoder_D_L.load_state_dict(torch.load(options.net_E_D_L))
 print(encoder_D_L)
 
 decoder_RGB_R = model.decoder(3)
-decoder_RGB_R.apply(LJY_utils.weights_init)
+decoder_RGB_R.apply(utils.weights_init)
 if options.net_D_RGB_R != '':
     decoder_RGB_R.load_state_dict(torch.load(options.net_D_RGB_R ))
 print(decoder_RGB_R)
 
 decoder_RGB_L = model.decoder(3)
-decoder_RGB_L.apply(LJY_utils.weights_init)
+decoder_RGB_L.apply(utils.weights_init)
 if options.net_D_RGB_L != '':
     decoder_RGB_L.load_state_dict(torch.load(options.net_D_RGB_L))
 print(decoder_RGB_L)
 
 decoder_D_D = model.decoder(1)
-decoder_D_D.apply(LJY_utils.weights_init)
+decoder_D_D.apply(utils.weights_init)
 if options.net_D_D_D != '':
     decoder_D_D.load_state_dict(torch.load(options.net_D_D_D))
 print(decoder_D_D)
 
 decoder_D_L = model.decoder(1)
-decoder_D_L.apply(LJY_utils.weights_init)
+decoder_D_L.apply(utils.weights_init)
 if options.net_D_D_L != '':
     decoder_D_L.load_state_dict(torch.load(options.net_D_D_L))
 print(decoder_D_L)
@@ -328,11 +328,11 @@ for epoch in range(options.iteration):
             Depth_L_Image = torch.cat((unorm(original_Depth_LIDAR[0].data), unorm(output_D_L[0].data)), 1)
             Depth_D_Image = torch.cat((unorm(original_Depth_Disparity[0].data), unorm(output_D_D[0].data)),1)
 
-            win_dict = LJY_visualize_tools.draw_images_to_windict(win_dict, [RGB_L_Image, RGB_R_Image,
+            win_dict = visualize_tools.draw_images_to_windict(win_dict, [RGB_L_Image, RGB_R_Image,
                                                                              Depth_L_Image, Depth_D_Image],
                                                                   ["RGB_L", "RGB_R", "Depth_L", "Depth_D"])
 
-            line_win_dict = LJY_visualize_tools.draw_lines_to_windict(line_win_dict,
+            line_win_dict = visualize_tools.draw_lines_to_windict(line_win_dict,
                                                                       [err_RGB_L.data.mean(), err_RGB_R.data.mean(),
                                                                        err_D_L.data.mean(), err_D_D.data.mean()],
                                                                       ['lossRGB_L', 'lossRGB_R', 'lossD_L', 'lossD_D'],
