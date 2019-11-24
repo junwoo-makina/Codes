@@ -15,12 +15,12 @@ class ImageDataset(Dataset):
         self.animal_path = root_animal
 
         total_human_path = []
-        cur_human_path = glob.glob(os.path.join(self.human_path, 'HumanHead', '*'))
+        cur_human_path = glob.glob(os.path.join(self.human_path, 'real_test', '*'))
         total_human_path = total_human_path + cur_human_path
 
 
         total_animal_path = []
-        cur_animal_path = glob.glob(os.path.join(self.animal_path, 'BearHead', '*'))
+        cur_animal_path = glob.glob(os.path.join(self.animal_path, 'real_test', '*'))
         total_animal_path = total_animal_path + cur_animal_path
 
 

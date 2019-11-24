@@ -87,8 +87,8 @@ dataloader = DataLoader(ImageDataset(options.dataroot, options.dataroot2, transf
 # Create output dirs if they don't exist
 if not os.path.exists('/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/3. TestAnimal'):
     os.makedirs('/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/3. TestAnimal')
-if not os.path.exists('/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/3. TestHuman'):
-    os.makedirs('/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/3. TestHuman')
+if not os.path.exists('/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/4. TestHuman'):
+    os.makedirs('/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/4. TestHuman')
 
 for i, batch in enumerate(dataloader):
     # Set model input

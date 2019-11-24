@@ -34,6 +34,8 @@ parser.add_argument('--input_nc', type = int, default = 3, help = 'number of cha
 parser.add_argument('--output_nc', type = int, default = 3, help = 'number of channels of output data')
 parser.add_argument('--cuda', default = True, action = 'store_true', help = 'use GPU computation')
 parser.add_argument('--n_cpu', type = int, default = 8, help = 'number of cpu threads to use during batch generation')
+parser.add_argument('--generator_A2B', type=str, default='/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/2. TestParameter/Bear_netG_A2B.pth', help='A2B generator checkpoint file')
+parser.add_argument('--generator_B2A', type=str, default='/home/cheeze/PycharmProjects/KJW/2. Codes/1. capstone/4. Result/2. TestParameter/Bear_netG_B2A.pth', help='B2A generator checkpoint file')
 parser.add_argument('--seed', type = int, help = 'manual seed')
 options = parser.parse_args()
 
@@ -71,6 +73,15 @@ netG_A2B.apply(weights_init_normal)
 netG_B2A.apply(weights_init_normal)
 netD_A.apply(weights_init_normal)
 netD_B.apply(weights_init_normal)
+
+## Load state dicts
+#netG_A2B.load_state_dict(torch.load(options.generator_A2B))
+#netG_B2A.load_state_dict(torch.load(options.generator_B2A))
+
+## Set model's test mode
+#netG_A2B.eval()
+#netG_B2A.eval()
+
 
 # Loss function
 criterion_GAN = torch.nn.MSELoss()
