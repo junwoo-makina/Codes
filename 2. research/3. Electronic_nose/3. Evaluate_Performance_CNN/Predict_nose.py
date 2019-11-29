@@ -3,13 +3,15 @@ import numpy as np
 import keras
 from keras.models import Sequential
 import resnet
+from LeNet_implement import LeNet
 from keras import layers
 from keras.preprocessing.image import ImageDataGenerator
 
 def make_model():
     #base_model = ResNet50(input_shape=(224, 224, 3), include_top=False, weights='imagenet', input_tensor=None,
      #                     pooling=None)
-    base_model = resnet.ResnetBuilder.build_resnet_18((3, 224, 224), 8)
+    #base_model = resnet.ResnetBuilder.build_resnet_18((3, 224, 224), 8)
+    base_model = LeNet.build(224, 224, 3, 8)
     for layer in base_model.layers:
         layer.trainable = True
 
@@ -36,7 +38,7 @@ for i in range(8):
         score=[0]
         for k in range(9): # for all loss per set
             test_generator = test_datagen.flow_from_directory(
-                '/home/cheeze/PycharmProjects/KJW/1. Dataset/Dataset_recon_nose/iter%d/set%d/set%d_test_data_loss_%d_recon_DAE'%(i+1, j+1, j+1, (k+2)*5),
+                '/home/cheeze/PycharmProjects/KJW/1. Dataset/Dataset_electronic_nose/iter%d/set%d/set%d_test_data_loss_%d'%(i+1, j+1, j+1, (k+2)*5),
                 shuffle=False,
                 target_size=(224, 224),
                 batch_size=20,
@@ -62,3 +64,12 @@ for iters in range(8):
             loss_perform += total[iters,sets,loss]
 
         print("iter%d loss%d performance is : %f"%(iters+1, (loss+2)*5, loss_perform/8))
+
+
+for loss in range(9):
+    perform = 0
+    for iters in range(8):
+        perform = 0
+        perform += np.sum(total[iters, :, loss])/8
+
+    print("Loss %d data's performance : %f"%((loss+2)*5, perform))

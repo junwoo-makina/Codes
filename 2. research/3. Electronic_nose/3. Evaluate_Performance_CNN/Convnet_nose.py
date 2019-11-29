@@ -7,7 +7,8 @@ import cv2
 from keras.preprocessing.image import ImageDataGenerator
 from keras.applications.resnet50 import ResNet50
 import resnet
-
+#from Lenet import LeNet
+from LeNet_implement import LeNet
 
 def parsing_data(path):
     f = open(path, 'r')
@@ -55,6 +56,8 @@ def make_model():
     #base_model = ResNet50(input_shape=(224, 224, 3), include_top=False, weights='imagenet', input_tensor=None,
      #                     pooling=None)
     base_model = resnet.ResnetBuilder.build_resnet_18((3, 224, 224), 8)
+    #base_model = LeNet.build(width=224, height=224, depth=3, classes=8, weightsPath=None)
+    #base_model = LeNet.build(224, 224, 3, 8)
     for layer in base_model.layers:
         layer.trainable = True
 

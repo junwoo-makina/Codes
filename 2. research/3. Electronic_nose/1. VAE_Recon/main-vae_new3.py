@@ -238,13 +238,13 @@ if __name__ == "__main__":
     for val in range(1,9):              # Set order 1~8
         print("do %d set" % val)
 
-        tr = np.loadtxt('/home/cheeze/PycharmProjects/KJW/research/electric_nose/dataset/iter3/set%d/set%d_tr_data.dat'%(val, val))
+        tr = np.loadtxt('/home/cheeze/PycharmProjects/KJW/research/electric_nose/dataset/iter1/set%d/set%d_tr_data.dat'%(val, val))
         tr_data = tr[:,:32000]
         te_data = []
         tr_label = tr[:,32000]
         te_label = []
         for err in range(1, 11):        # Error size 5~50
-            temp_test = np.loadtxt('/home/cheeze/PycharmProjects/KJW/research/electric_nose/dataset/iter3/set%d/set%d_test_data_loss_%d.dat'%(val, val, err*5))
+            temp_test = np.loadtxt('/home/cheeze/PycharmProjects/KJW/research/electric_nose/dataset/iter1/set%d/set%d_test_data_loss_%d.dat'%(val, val, err*5))
             te_data.append(temp_test[:,:32000])
             te_label.append(temp_test[:,32000])
 
@@ -278,8 +278,26 @@ if __name__ == "__main__":
                     save_model_path = saver.save(sess.os.path.join(save_folder, '%d-%d percent_model.ckpt'%(val,missing_rate*5)))
 
                 # test
-                te = generate_test_batch(te_data[missing_rate-1], 20, 130, int(32000*(100-missing_rate*5)/100))
-                recon_val_te, latent_val_te = sess.run([te_output_tensor, latent_tensor], {te_input_tensor:te})
+                tr = generate_test_batch(tr_data[:, :FLAGS.input_size], 140, 0, 32000)  # original
+                trm = generate_test_batch(tr_data[:, :FLAGS.input_size], 140, 130, int(32000*(100-missing_rate*5)/100))  # missing
+                te = generate_test_batch(te_data[missing_rate-1], 20, 130, 32000)
+                tem = generate_test_batch(te_data[missing_rate-1], 20, 130, int(32000*(100-missing_rate*5)/100))
 
-                pathpath = '/home/cheeze/PycharmProjects/KJW/research/electric_nose/dataset_recon/iter3/set%d'%(val)
-                np.savetxt(os.path.join(pathpath, 'Iter3_set'+str(val)+'_loss_'+str(missing_rate*5)+'_recon_DAE.dat'), recon_val_te)
+                reconstructed_val_te, latent_val_te = sess.run([te_output_tensor, latent_tensor], {te_input_tensor: te})
+                reconstructed_val_tem, latent_val_tem = sess.run([te_output_tensor, latent_tensor],
+                                                                 {te_input_tensor: tem})
+                reconstructed_val_tr, latent_val_tr = sess.run([te_output_tensor, latent_tensor], {te_input_tensor: tr})
+                reconstructed_val_trm, latent_val_trm = sess.run([te_output_tensor, latent_tensor],
+                                                                 {te_input_tensor: trm})
+
+                pathpath = '/home/cheeze/PycharmProjects/KJW/research/electric_nose/Dataset_recon_nose/iter1/set%d'%(val)
+                #np.savetxt(os.path.join(pathpath, 'Iter3_set'+str(val)+'_loss_'+str(missing_rate*5)+'_recon_DAE.dat'), recon_val_te)
+
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_loss_'+str(missing_rate*5)+'_recon_DAE.dat'), reconstructed_val_tem)
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_loss_'+str(missing_rate*5)+'_recon_latent.dat'), latent_val_tem)
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_recon_DAE.dat'), reconstructed_val_te)
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_latent.dat'), latent_val_te)
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_tr_latent.dat'), latent_val_tr)
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_tr_recon_DAE.dat'), reconstructed_val_tr)
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_loss_'+str(missing_rate*5)+'_trm_latent.dat'), latent_val_trm)
+                np.savetxt(os.path.join(pathpath, 'Iter1_set'+str(val)+'_loss_'+str(missing_rate*5)+'_trm_recon_DAE.dat'), reconstructed_val_trm)
